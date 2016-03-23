@@ -1,0 +1,20 @@
+---
+- name: config_daemon | configuring open-iscsi daemon
+  template:
+    src: "etc/iscsi/iscsid.conf.j2"
+    dest: "/etc/iscsi/iscsid.conf"
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart open-iscsi
+
+- name: config_daemon | configuring default open-iscsi daemon
+  template:
+    src: "etc/default/open-iscsi.j2"
+    dest: "/etc/default/open-iscsi"
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart open-iscsi

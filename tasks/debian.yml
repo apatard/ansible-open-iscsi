@@ -1,0 +1,6 @@
+---
+- name: debian | installing open-iscsi
+  apt:
+    name: "open-iscsi"
+    state: present
+    
