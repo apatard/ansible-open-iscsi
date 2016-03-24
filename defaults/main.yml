@@ -3,6 +3,10 @@
 config_open_iscsi: false
 config_open_iscsi_lvm_groups: false
 config_open_iscsi_targets: false
+open_iscsi_debian_pre_req_packages:
+  - lvm2
+  - scsitools
+  - xfsprogs
 open_iscsi_lvm_groups:
   - 'glusterfs-vg'
 open_iscsi_mode: 'automatic'

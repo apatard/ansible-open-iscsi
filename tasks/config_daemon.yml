@@ -6,8 +6,7 @@
     owner: root
     group: root
     mode: 0644
-  notify:
-    - restart open-iscsi
+  register: open_iscsi_conf
 
 - name: config_daemon | configuring default open-iscsi daemon
   template:
@@ -16,5 +15,12 @@
     owner: root
     group: root
     mode: 0644
-  notify:
-    - restart open-iscsi
+  register: open_iscsi_daemon
+
+- name: config_daemon | restarting open-iscsi (if config changes)  #doing this here vs. event handler...seeing issues of assigning wrong /dev/
+  service:
+    name: "open-iscsi"
+    state: restarted
+  when: >
+        open_iscsi_conf.changed or
+        open_iscsi_daemon.changed
