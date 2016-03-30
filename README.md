@@ -1,31 +1,57 @@
 Role Name
 =========
 
-A brief description of the role goes here.
+Installs and configures open-iscsi initiator (http://www.open-iscsi.org/)
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+In order to attach to iSCSI targets, they must exist on your NAS/SAN prior to attaching  
+to them.
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
-
+````
+---
+# defaults file for ansible-open-iscsi
+config_open_iscsi: false
+config_open_iscsi_lvm_groups: false
+config_open_iscsi_targets: false
+open_iscsi_debian_pre_req_packages:
+  - lvm2
+  - scsitools
+  - xfsprogs
+open_iscsi_lvm_groups:
+  - 'glusterfs-vg'
+open_iscsi_mode: 'automatic'
+open_iscsi_targets:
+  - name: '{{ ansible_hostname }}'
+    discover: true
+    automatic: true
+    portal: 'node0.{{ pri_domain_name }}'
+    target: 'iqn.2001-04.org.example:storage.{{ ansible_hostname }}'
+    login: true
+pri_domain_name: 'example.org'
+````
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+None
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+````
+---
+- hosts: all
+  become: true
+  vars:
+  roles:
+    - role: ansible-open-iscsi
+  tasks:
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+````
 
 License
 -------
@@ -35,4 +61,7 @@ BSD
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+Larry Smith Jr.
+- @mrlesmithjr
+- http://everythingshouldbevirtual.com
+- mrlesmithjr [at] gmail.com
