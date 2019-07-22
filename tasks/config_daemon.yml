@@ -23,10 +23,17 @@
     mode: 0644
   register: open_iscsi_daemon
 
-- name: config_daemon | restarting open-iscsi (if config changes)  #doing this here vs. event handler...seeing issues of assigning wrong /dev/
-  service:
-    name: "open-iscsi"
-    state: restarted
+- name: restart services
+  block:
+  - name: config_daemon | restarting iscsid (if config changes)  #doing this here vs. event handler...seeing issues of assigning wrong /dev/
+    service:
+      name: "iscsid"
+      state: restarted
+  - name: config_daemon | restarting open-iscsi (if config changes)  #doing this here vs. event handler...seeing issues of assigning wrong /dev/
+    service:
+      name: "open-iscsi"
+      state: restarted
   when: >
-        open_iscsi_conf.changed or
-        open_iscsi_daemon.changed
+        open_iscsi_conf is changed or
+        open_iscsi_daemon is changed or
+        open_iscsi_initiator is changed
