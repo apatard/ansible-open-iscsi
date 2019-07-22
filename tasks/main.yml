@@ -4,7 +4,7 @@
   when: ansible_os_family == "Debian"
 
 - include: config_daemon.yml
-  when: config_open_iscsi
+  when: config_open_iscsi | bool
 
 - include: config_targets.yml
-  when: config_open_iscsi_targets
+  when: config_open_iscsi_targets | bool
