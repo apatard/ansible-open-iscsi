@@ -4,6 +4,7 @@
     name: "{{ item }}"
     state: present
   with_items: '{{ open_iscsi_debian_pre_req_packages }}'
+  when: open_iscsi_debian_pre_req_packages | length > 0
 
 - name: debian | installing open-iscsi
   apt:
