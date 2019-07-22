@@ -33,6 +33,9 @@ open_iscsi_targets:
     target: 'iqn.2001-04.org.example:storage.{{ ansible_hostname }}'
     login: true
 pri_domain_name: 'example.org'
+open_iscsi_initiator_name: "{{ ansible_date_time.year + '-' + ansible_date_time.month }}.org.example:{{ ansible_hostname }}"
+open_iscsi_session_auth: {}
+
 ````
 Dependencies
 ------------

@@ -48,19 +48,23 @@ node.leading_login = No
 # CHAP Settings
 # *************
 
-# To enable CHAP authentication set node.session.auth.authmethod
-# to CHAP. The default is None.
-#node.session.auth.authmethod = CHAP
-
-# To set a CHAP username and password for initiator
-# authentication by the target(s), uncomment the following lines:
-#node.session.auth.username = username
-#node.session.auth.password = password
-
-# To set a CHAP username and password for target(s)
-# authentication by the initiator, uncomment the following lines:
-#node.session.auth.username_in = username_in
-#node.session.auth.password_in = password_in
+{% if open_iscsi_session_auth | length > 0 %}
+{% if 'method' in open_iscsi_session_auth %}
+node.session.auth.authmethod = {{ open_iscsi_session_auth['method'] }}
+{% endif %}
+{% if 'username' in open_iscsi_session_auth %}
+node.session.auth.username = {{ open_iscsi_session_auth['username'] }}
+{% endif %}
+{% if 'password' in open_iscsi_session_auth %}
+node.session.auth.password = {{ open_iscsi_session_auth['password'] }}
+{% endif %}
+{% if 'username_in' in open_iscsi_session_auth %}
+node.session.auth.username = {{ open_iscsi_session_auth['username_in'] }}
+{% endif %}
+{% if 'password_in' in open_iscsi_session_auth %}
+node.session.auth.password = {{ open_iscsi_session_auth['password_in'] }}
+{% endif %}
+{% endif %}
 
 # To enable CHAP authentication for a discovery session to the target
 # set discovery.sendtargets.auth.authmethod to CHAP. The default is None.

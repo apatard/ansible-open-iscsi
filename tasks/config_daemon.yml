@@ -1,4 +1,10 @@
 ---
+- name: config_daemon | configuring iscsi initiator name
+  copy:
+    dest:   '/etc/iscsi/initiatorname.iscsi'
+    content: 'InitiatorName={{ open_iscsi_initiator_name }}'
+  register: open_iscsi_initiator
+
 - name: config_daemon | configuring open-iscsi daemon
   template:
     src: "etc/iscsi/iscsid.conf.j2"
