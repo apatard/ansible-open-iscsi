@@ -10,5 +10,6 @@
     discover: "{{ item.discover }}"
     login: "{{ item.login }}"
     portal: "{{ item.portal }}"
-    target: "{{ item.target|default(omit) }}"
+    target: "{{ item.target  }}"
+    auto_node_startup: "{{ item.automatic | default(omit) }}"
   with_items: '{{ open_iscsi_targets }}'
