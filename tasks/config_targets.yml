@@ -3,6 +3,9 @@
   open_iscsi:
     discover: "{{ item.discover }}"
     portal: "{{ item.portal }}"
+    node_user: "{{ item.user | default(omit) }}"
+    node_pass: "{{ item.pass | default(omit) }}"
+    node_auth: 'CHAP'
   with_items: '{{ open_iscsi_targets }}'
 
 - name: config_targets | configuring targets
@@ -11,5 +14,8 @@
     login: "{{ item.login }}"
     portal: "{{ item.portal }}"
     target: "{{ item.target  }}"
+    node_user: "{{ item.user | default(omit) }}"
+    node_pass: "{{ item.pass | default(omit) }}"
+    node_auth: 'CHAP'
     auto_node_startup: "{{ item.automatic | default(omit) }}"
   with_items: '{{ open_iscsi_targets }}'
